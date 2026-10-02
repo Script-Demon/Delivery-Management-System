@@ -130,3 +130,7 @@ Socket events: `order:watch` / `agent:location` (client → server); `order:chan
 | `JWT_SECRET` | dev value | **set this in production** |
 | `DB_FILE` | `server/data.sqlite` | SQLite path |
 | `AUTO_ASSIGN` | `false` | auto-assign new orders as they're placed |
+
+## License
+
+[MIT](LICENSE) © 2026 Script-Demon
