@@ -4,6 +4,20 @@ A full-stack platform for **Bangladeshi** businesses that deliver food, parcels 
 
 **Stack:** Node.js · Express 5 · SQLite (built-in `node:sqlite`) · Socket.IO · JWT · React 19 · Vite · Leaflet/OpenStreetMap
 
+![Admin dashboard](docs/screenshots/admin-dashboard.png)
+
+## Screenshots
+
+| Live order tracking (customer) | Agent's job board |
+|---|---|
+| ![Order tracking with live agent location](docs/screenshots/order-tracking.png) | ![Agent jobs with location sharing](docs/screenshots/agent-jobs.png) |
+| **Placing an order, priced in Taka** | **Admin live map of agents and orders** |
+| ![New delivery form with price quote](docs/screenshots/new-order.png) | ![Live map](docs/screenshots/live-map.png) |
+| **Dispatch: orders with inline assignment** | **Delivery agents: load, ratings, earnings** |
+| ![Orders table](docs/screenshots/admin-orders.png) | ![Agents](docs/screenshots/agents.png) |
+
+<p align="center"><img src="docs/screenshots/mobile-customer.png" alt="Customer home on mobile" width="300"><br><em>Works on phones too</em></p>
+
 ## Quick start
 
 Requires **Node.js 22.13+** (uses the built-in SQLite module, so there are no native builds).

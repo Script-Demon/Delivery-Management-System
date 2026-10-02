@@ -1,4 +1,18 @@
-import { useState } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
+
+/** Track an element's rendered width so SVG text stays at its real pixel size. */
+function useWidth(fallback) {
+  const ref = useRef(null);
+  const [width, setWidth] = useState(fallback);
+  useLayoutEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const ro = new ResizeObserver(([entry]) => setWidth(Math.max(200, Math.round(entry.contentRect.width))));
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+  return [ref, width];
+}
 
 /** Rect whose top corners are rounded and bottom sits flat on the baseline. */
 function topRounded(x, y, w, h, r = 4) {
@@ -19,7 +33,7 @@ function niceMax(v) {
  */
 export function BarChart({ data, series, xKey = 'day', formatX = (v) => v, formatY = (v) => v, height = 220, labelEvery = 1 }) {
   const [hover, setHover] = useState(null);
-  const W = 640;
+  const [ref, W] = useWidth(640);
   const pad = { top: 8, right: 4, bottom: 24, left: 40 };
   const innerW = W - pad.left - pad.right;
   const innerH = height - pad.top - pad.bottom;
@@ -32,13 +46,13 @@ export function BarChart({ data, series, xKey = 'day', formatX = (v) => v, forma
   const GAP = 2;
 
   return (
-    <div className="chart" onMouseLeave={() => setHover(null)}>
+    <div className="chart" ref={ref} onMouseLeave={() => setHover(null)}>
       {series.length > 1 && (
         <div className="legend">
           {series.map((s) => <span key={s.key}><i style={{ background: s.color }} />{s.label}</span>)}
         </div>
       )}
-      <svg viewBox={`0 0 ${W} ${height}`} role="img" aria-label="Bar chart">
+      <svg viewBox={`0 0 ${W} ${height}`} width={W} height={height} role="img" aria-label="Bar chart">
         {ticks.map((t) => (
           <g key={t}>
             <line className={t === 0 ? 'baseline' : 'gridline'} x1={pad.left} x2={W - pad.right} y1={y(t)} y2={y(t)} />
